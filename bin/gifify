@@ -93,9 +93,9 @@ function checkRequirements() {
     {'bin': 'gifsicle', 'args': '-h', 'needs': ['lossy']}
   ];
 
-  if(process.platform !== 'win32') {
+  /*if(process.platform !== 'win32') {
     required.push({'bin': 'convert', 'args': '--version', 'needs': ['fontconfig']});
-  } else {
+  } else */{
     required.push({'bin': 'convert', 'args': '--version', 'needs': []});
   }
 
