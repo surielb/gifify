@@ -11,7 +11,11 @@ function gifify(streamOrFile, opts) {
   if (typeof streamOrFile === 'string') {
     opts.inputFilePath = streamOrFile;
   }
-
+  
+  if(opts.level === undefined){
+    opts.level = 1;
+  }
+  
   if (opts.fps === undefined) {
     opts.fps = 10;
   }
@@ -166,7 +170,7 @@ function computeGifsicleArgs(opts) {
   // http://www.lcdf.org/gifsicle/man.html
   // --lossy is not yet into master, https://github.com/kohler/gifsicle/pull/16
   var args = [
-    opts.level || '-O1',
+    '-O' + (opts.level || 1),
     '--lossy=' + opts.compress * 2,
     '--colors=' + opts.colors,
     '--delay', Math.round(100 / opts.fps / opts.speed),
