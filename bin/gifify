@@ -76,9 +76,9 @@ function encode() {
   outputStream.on('error', abort.bind(null));
 }
 
-function notInstalledMessage(command) {
+function notInstalledMessage(command,error) {
   var readMe = "https://github.com/vvo/gifify#requirements";
-  return colors.red(util.format("Could not find %s. Is it installed?\n\nMore info: %s", command, readMe));
+  return colors.red(util.format("Could not find %s. Is it installed?\n\nMore info: %s\n%s", command, readMe,error));
 }
 
 function missingDependency(command, dependencies) {
@@ -112,7 +112,7 @@ function checkRequirements() {
 function checkRequirement(obj) {
   return new Promise(function find(resolve, reject) {
     exec([obj.bin, obj.args].join(' '), function(error, stdout, stderr) {
-      if (error) return reject(notInstalledMessage(obj.bin));
+      if (error) return reject(notInstalledMessage(obj.bin,error));
 
       var ok = (obj.needs || []).every(function(req) {
                  return new RegExp(req, 'i').test(stdout);
